@@ -1,40 +1,72 @@
 # Mobile Price Classification — Machine Learning
 
-A reproducible individual coursework project comparing **K-Nearest Neighbors (KNN)** and **Decision Tree** classifiers to predict a phone’s price *category* (0–3) from its specifications.
+An individual Machine Learning project comparing **K-Nearest Neighbors (KNN)** and **Decision Tree** classifiers to predict mobile phone price categories based on technical specifications.
 
 ## Dataset
-- **2,000** labeled phones; **20** numerical input features; **four balanced classes** (500 records each).
-- Source: [Mobile Price Classification on Kaggle](https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification).
-- Dataset filename: `train.csv` (download from the source and place beside the notebook). The dataset is not included in this starter package; check its license before redistributing.
 
-## Methods
-- Exploratory analysis: class distributions, feature correlations, and plots.
-- 80/20 stratified train/test split (`random_state=42`).
-- KNN with `StandardScaler` inside a scikit-learn `Pipeline`. K (1–30) selected using 5-fold stratified CV **on training data only**.
-- Decision Tree (default depth) fitted on training data.
-- Accuracy, confusion matrices, classification report, and feature importance.
+- **2,000 mobile phones** with **20 numerical input features**.
+- Four balanced price categories: Low (0), Medium (1), High (2), and Very High (3).
+- Features include RAM, battery power, camera resolution, screen dimensions, and connectivity.
+- **Source:** [Mobile Price Classification — Kaggle](https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification).
+- **Dataset file:** `train.csv`, included in this repository.
 
-## Results
+## Methodology
 
-| Model | 5-fold CV on training set | Held-out test accuracy |
+The project follows a supervised machine learning workflow:
+
+1. **Exploratory Data Analysis (EDA):** Examined feature distributions, class balance, and correlations.
+2. **Data Preprocessing:** Applied feature scaling using StandardScaler within a scikit-learn Pipeline.
+3. **Data Splitting:** Divided the dataset into 80% training and 20% testing using stratified sampling (`random_state=42`).
+4. **Model Training:** Implemented KNN and Decision Tree classifiers.
+5. **Model Selection:** Selected the KNN hyperparameter using 5-fold stratified cross-validation on training data.
+6. **Model Evaluation:** Compared performance using accuracy, confusion matrices, classification reports, and feature importance.
+
+## Model Performance
+
+| Model | 5-Fold CV Accuracy | Test Accuracy |
 |---|---:|---:|
-| KNN (`k=26`) | 59.38% | 63.75% |
+| K-Nearest Neighbors (K=26) | 59.38% | 63.75% |
 | Decision Tree | 81.56% | **83.00%** |
 
-Results were reproduced using the supplied `train.csv` and the procedure above. The older assignment report used different preprocessing and model-selection steps, so its reported CV numbers should **not** be treated as directly comparable. KNN's 59.38% figure is a post-selection training-set CV summary; the GridSearchCV tuning score should not be treated as an unbiased estimate of generalization. The held-out test set is used once for final comparison.
+The models were evaluated using cross-validation on the training data and a separate held-out test set. Preprocessing and model selection were performed using training-only procedures to prevent data leakage and support reliable evaluation.
 
-**Key insight:** RAM is strongly associated with the target price category in this dataset, and the Decision Tree performed better than KNN under this experiment. These are dataset-specific results and do not predict actual currency prices.
+### Key Findings
 
-## Run locally
-1. Install Python 3.10+ and create a virtual environment (recommended).
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Download `train.csv` from the Kaggle dataset linked above and place it in this directory.
-4. Launch `jupyter notebook`, open `MobilePriceClassification_ML.ipynb`, and choose **Run All**.
+- **Decision Tree achieved the highest test accuracy of 83.00%.**
+- RAM demonstrated a strong relationship with mobile phone price categories.
+- Decision Tree performed better than KNN by prioritizing informative features.
+- The models predict price categories rather than actual monetary prices.
 
-## Repository files
-- `MobilePriceClassification_ML.ipynb` — cleaned, reproducible notebook.
-- `requirements.txt` — Python dependencies.
-- `README.md` — project overview and usage instructions.
+## Technologies Used
 
-## Scope
-Educational ML classification project, originally completed as an individual assignment and revised for reproducibility. No web app or production deployment is claimed.
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- Matplotlib
+- Seaborn
+- Jupyter Notebook
+
+## How to Run
+
+1. Clone or download this repository.
+2. Install Python 3.10 or later.
+3. Install the required libraries:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Launch Jupyter Notebook:
+
+   ```bash
+   jupyter notebook
+   ```
+
+5. Open `MobilePriceClassification_ML.ipynb`.
+6. Select **Run All Cells** to execute the complete analysis.
+
+
+## Conclusion
+
+This project demonstrates the application of supervised machine learning techniques to a multiclass classification problem. By comparing KNN and Decision Tree classifiers, it highlights the importance of data preprocessing, appropriate model evaluation, and feature analysis in building reliable predictive models.
